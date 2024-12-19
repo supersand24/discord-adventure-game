@@ -12,8 +12,10 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //Get Bot Token from Codespaces if using GitHub Codespaces
+
         JDABuilder builder = JDABuilder.create(
-            "INSERT-TOKEN-HERE",
+            System.getenv("DISCORD_ADVENTURE_GAME_BOT_TOKEN"),
             GatewayIntent.MESSAGE_CONTENT,
             GatewayIntent.GUILD_MEMBERS,
             GatewayIntent.GUILD_PRESENCES,
