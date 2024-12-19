@@ -13,7 +13,7 @@ public class GameSession {
 
         players.add(new PlayerCharacter("Bob"));
 
-        System.out.println(players.get(0).toString());
+        System.out.println(players.get(0).checkBackpack());
         
     }
 

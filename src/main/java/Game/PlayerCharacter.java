@@ -1,5 +1,9 @@
 package Game;
 
+import Game.Item.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PlayerCharacter {
@@ -13,6 +17,10 @@ public class PlayerCharacter {
     int dexterity;
     int charsima;
 
+    Item rightHand;
+    Item leftHand;
+    List<Item> backpack = new ArrayList<>();
+
     public PlayerCharacter(String name) {
         this.name = name;
 
@@ -23,6 +31,28 @@ public class PlayerCharacter {
 
         maxHitPoints = random.nextInt(dexterity) + strength + 4;
         hitPoints = maxHitPoints;
+
+        //Inventory
+        rightHand = new Item("Iron Sword", true, 2, 0);
+        leftHand = new Item("Wooden Shield", true, 5, 0);
+        backpack.add(new Item("Minor Potion of Healing", true, 0, 10));
+    }
+
+    public String checkInventory() {
+        return "I am holding an " + rightHand.name + " in my right hand and a " + leftHand.name + " in my left.";
+    }
+
+    public String checkBackpack() {
+        if (backpack == null) {
+            return "I seem to be missing my backpack.";
+        } else {
+            StringBuilder str = new StringBuilder();
+            str.append("In my backpack I see...");
+            for (Item item : backpack) {
+                str.append("\nA ").append(item.name);
+            }
+            return str.toString();
+        }
     }
 
     public String toString() {
