@@ -11,16 +11,16 @@
 			"installMaven": "true",
 			"installGradle": "false"
 		}
-	}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
+	"postCreateCommand": "sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java && mvn clean install && java -version"
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	// "customizations": {
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
