@@ -44,6 +44,8 @@ public class Listener extends ListenerAdapter{
 
                 ev.getChannel().sendMessage("What would you like to do?").setComponents(actionRows).queue();
 
+                ev.reply("Buttons sent.").setEphemeral(true).queue();
+
             }
         }
     }
@@ -53,25 +55,25 @@ public class Listener extends ListenerAdapter{
             case "check-stats" -> {
                 PlayerCharacter character = Main.gameSession.getCharacter(ev.getMember().getIdLong());
                 if (character == null) {
-                    ev.reply("You don't have a character!").queue();
+                    ev.reply("You don't have a character!").setEphemeral(true).queue();
                 } else {
-                    ev.reply(character.checkStats()).queue();
+                    ev.reply(character.checkStats()).setEphemeral(true).queue();
                 }
             }
             case "check-hands" -> {
                 PlayerCharacter character = Main.gameSession.getCharacter(ev.getMember().getIdLong());
                 if (character == null) {
-                    ev.reply("You don't have a character!").queue();
+                    ev.reply("You don't have a character!").setEphemeral(true).queue();
                 } else {
-                    ev.reply(character.checkHands()).queue();
+                    ev.reply(character.checkHands()).setEphemeral(true).queue();
                 }
             }
             case "check-backpack" -> {
                 PlayerCharacter character = Main.gameSession.getCharacter(ev.getMember().getIdLong());
                 if (character == null) {
-                    ev.reply("You don't have a character!").queue();
+                    ev.reply("You don't have a character!").setEphemeral(true).queue();
                 } else {
-                    ev.reply(character.checkBackpack()).queue();
+                    ev.reply(character.checkBackpack()).setEphemeral(true).queue();
                 }
             }
         }
