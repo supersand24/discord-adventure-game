@@ -1,14 +1,18 @@
 package Bot;
 
+import Game.GameSession;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Main {
 
     static JDA jda;
+
+    static GameSession gameSession;
 
     public static void main(String[] args) {
 
@@ -33,7 +37,11 @@ public class Main {
             jda = builder.build();
             jda.awaitReady();
 
-            getDiscordGuild().upsertCommand("join-game", "Game Management Commands").queue();
+            getDiscordGuild().upsertCommand("create-character", "Creates a character to join the current game.")
+                .addOption(OptionType.STRING, "character-name", "The name of your new character.", true)
+            .queue();
+
+            getDiscordGuild().upsertCommand("show-buttons", "Send the commonly used actions in chat.").queue();
 
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -1,20 +1,35 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameSession {
 
-    static World world = new World(5,5);
+    World world;
 
-    static List<PlayerCharacter> players = new ArrayList<>();
-    
-    public static void main(String[] args) {
+    public List<PlayerCharacter> players;
 
-        players.add(new PlayerCharacter("Bob"));
+    public HashMap<Long, PlayerCharacter> linkedPlayers;
 
-        System.out.println(players.get(0).checkBackpack());
-        
+    public GameSession() {
+        world = new World(5, 5);
+        players = new ArrayList<>();
+        linkedPlayers = new HashMap<>();
+    }
+
+    public PlayerCharacter createCharacter(long discordId, String characterName) {
+        PlayerCharacter newPlayer = new PlayerCharacter(characterName);
+        linkedPlayers.put(discordId, newPlayer);
+        return newPlayer;
+    }
+
+    public PlayerCharacter getCharacter(long discordId) {
+        try {
+            return linkedPlayers.get(discordId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

@@ -38,7 +38,11 @@ public class PlayerCharacter {
         backpack.add(new Item("Minor Potion of Healing", true, 0, 10));
     }
 
-    public String checkInventory() {
+    public String checkStats() {
+        return name + " " + hitPoints + "/" + maxHitPoints + "\nStr: " + strength + "\nDex: " + dexterity + "\nCha: " + charsima;
+    }
+
+    public String checkHands() {
         return "I am holding an " + rightHand.name + " in my right hand and a " + leftHand.name + " in my left.";
     }
 
@@ -56,7 +60,7 @@ public class PlayerCharacter {
     }
 
     public String toString() {
-        return name + " " + hitPoints + "/" + maxHitPoints + "\nStr: " + strength + "\nDex: " + dexterity + "\nCha: " + charsima;
+        return checkStats();
     }
     
 }
