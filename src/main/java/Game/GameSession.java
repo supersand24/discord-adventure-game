@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import Game.World.World;
+
 public class GameSession {
 
-    World world;
+    public World world;
 
     public List<PlayerCharacter> players;
 

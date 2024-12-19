@@ -1,8 +1,8 @@
-package Game;
+package Game.World;
 
 public class Settlement {
 
-    String name;
+    public String name;
     
     public Settlement() {
         this.name = "Unnamed Settlement";
