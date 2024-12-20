@@ -55,6 +55,11 @@ public class World {
 
     }
 
+    public Settlement getRandomSettlement() {
+        Random random = new Random();
+        return settlements.get(random.nextInt(settlements.size()));
+    }
+
     public void systemPrintMap() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {

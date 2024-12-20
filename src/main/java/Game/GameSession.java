@@ -23,6 +23,10 @@ public class GameSession {
     public PlayerCharacter createCharacter(long discordId, String characterName) {
         PlayerCharacter newPlayer = new PlayerCharacter(characterName);
         linkedPlayers.put(discordId, newPlayer);
+
+        //Place Character in a Settlement.
+        newPlayer.moveTo(world.getRandomSettlement());
+
         return newPlayer;
     }
 
