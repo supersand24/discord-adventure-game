@@ -5,7 +5,7 @@ import Game.PlayerCharacter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Settlement {
+public class Settlement extends Location {
 
     public String name;
     WorldSpace worldSpace;

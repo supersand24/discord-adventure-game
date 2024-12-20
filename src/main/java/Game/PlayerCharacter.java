@@ -1,6 +1,9 @@
 package Game;
 
 import Game.Item.Item;
+import Game.World.Location;
+import Game.World.Settlement;
+import Game.World.WorldSpace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,8 @@ public class PlayerCharacter {
     Item rightHand;
     Item leftHand;
     List<Item> backpack = new ArrayList<>();
+
+    Location currentLocation;
 
     public PlayerCharacter(String name) {
         this.name = name;
@@ -57,6 +62,22 @@ public class PlayerCharacter {
             }
             return str.toString();
         }
+    }
+
+    public String checkLocation() {
+        if (currentLocation == null) { return "I am currently lost in space and time!"; } else {
+            if (currentLocation instanceof Settlement) {
+                Settlement currentSettlement = (Settlement) currentLocation;
+                return "I am in " + currentSettlement.name + ".";
+            } else if (currentLocation instanceof WorldSpace) {
+                WorldSpace currentWorldSpace = (WorldSpace) currentLocation;
+                return "I am standing " + currentWorldSpace.getTerrainDescription();
+            } else { return "I am somewhere, but I can't tell where."; }
+        }
+    }
+
+    public void moveTo(Location location) {
+        this.currentLocation = location;
     }
 
     public String toString() {
