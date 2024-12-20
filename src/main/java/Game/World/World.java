@@ -21,7 +21,7 @@ public class World {
         createSettlements(3);
 
         for (Settlement settlement : settlements) {
-            System.out.println(settlement.name);
+            System.out.println(settlement.name + " at X:" + settlement.worldSpace.xCoord + " Y:" + settlement.worldSpace.yCoord );
         }
     }
 
@@ -29,10 +29,10 @@ public class World {
         Random random = new Random();
         Terrain[] terrains = Terrain.values();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < columns; x++) {
                 Terrain terrain = terrains[random.nextInt(terrains.length)];
-                grid[i][j] = new WorldSpace(terrain);
+                grid[y][x] = new WorldSpace(terrain,x,y);
             }
         }
     }
