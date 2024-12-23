@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import Game.World.Settlement.Direction;
-
 //An expandable 2D Array to keep track of different Locations within the Game Session.
 public class World {
 
@@ -76,7 +74,7 @@ public class World {
             int dirX = Integer.compare(connectingTo.worldSpace.xCoord, settlement.worldSpace.xCoord);
             int dirY = Integer.compare(connectingTo.worldSpace.yCoord, settlement.worldSpace.yCoord);
 
-            Settlement.Direction direction = Settlement.Direction.fromValues(dirX, dirY);
+            Direction direction = Direction.fromValues(dirX, dirY);
 
             createRoad(
                     settlement.worldSpace.xCoord,
@@ -166,5 +164,42 @@ public class World {
     }
 
     enum Terrain { Plains, Forest, River, Mountain }
+
+    public enum Direction {
+        North(0, -1),
+        Northeast(1, -1),
+        East(1, 0),
+        Southeast(1, 1),
+        South(0, 1),
+        Southwest(-1, 1),
+        West(-1, 0),
+        Northwest(-1, -1);
+
+        private final int x;
+        private final int y;
+
+        Direction(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return this.x;
+        }
+
+        public int getY() {
+            return this.y;
+        }
+
+        public static Direction fromValues(int x, int y) {
+            for (Direction dir : Direction.values()) {
+                if (dir.x == x && dir.y == y) {
+                    return dir;
+                }
+            }
+            throw new IllegalArgumentException("No direction for X:" + x + " Y:" + y);
+        }
+
+    }
 
 }

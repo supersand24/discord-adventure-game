@@ -7,7 +7,7 @@ import Game.World.Settlement;
 import Game.World.World;
 import Game.World.Location;
 import Game.World.WorldSpace;
-import Game.World.Settlement.Direction;
+import Game.World.World.Direction;
 
 @SuppressWarnings("unused")
 public class MockGameSession {
