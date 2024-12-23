@@ -2,7 +2,9 @@ package Game.World;
 
 import Game.World.World.Terrain;
 
-public class WorldSpace implements Location{
+public class WorldSpace extends Location{
+
+    public String name;
 
     public int xCoord;
     public int yCoord;
@@ -15,6 +17,7 @@ public class WorldSpace implements Location{
         this.terrain = terrain;
         this.xCoord = x;
         this.yCoord = y;
+        this.name = terrain.name();
     }
 
     public WorldSpace getWorldSpace() {

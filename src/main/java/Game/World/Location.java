@@ -3,24 +3,43 @@ package Game.World;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import Game.PlayerCharacter;
 
-public interface Location {
+public abstract class Location {
 
-    List<PlayerCharacter> playersHere = new ArrayList<>();
+    private final Logger log = LoggerFactory.getLogger(Location.class);
 
-    default void addPlayer(PlayerCharacter player) {
+    public String name = "Nameless Location";
+
+    protected List<PlayerCharacter> playersHere = new ArrayList<>();
+
+    // Add a player to the location
+    public void addPlayer(PlayerCharacter player) {
         playersHere.add(player);
     }
 
-    default void removePlayer(PlayerCharacter player) {
+    // Remove a player from the location
+    public void removePlayer(PlayerCharacter player) {
         if (playersHere.contains(player)) {
             playersHere.remove(player);
         } else {
-            System.out.println(player.name + " doesn't appear to be at this location.");
+            log.error(player.name + " doesn't appear to be at " + name + ".");
         }
     }
 
-    WorldSpace getWorldSpace();
-    
+    // Abstract method to be implemented by subclasses
+    public abstract WorldSpace getWorldSpace();
+
+    // Getter for name (optional, if needed)
+    public String getName() {
+        return name;
+    }
+
+    // Setter for name (optional, if needed)
+    public void setName(String name) {
+        this.name = name;
+    }
 }

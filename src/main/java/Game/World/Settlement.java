@@ -2,9 +2,8 @@ package Game.World;
 
 import java.util.*;
 
-public class Settlement implements Location {
+public class Settlement extends Location {
 
-    public String name;
     WorldSpace worldSpace;
 
     public Map<Direction, Settlement> signposts = new HashMap<>();

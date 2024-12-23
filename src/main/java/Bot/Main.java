@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
@@ -42,6 +43,19 @@ public class Main {
             .queue();
 
             getDiscordGuild().upsertCommand("show-buttons", "Send the commonly used actions in chat.").queue();
+
+            getDiscordGuild().upsertCommand("move", "Move your player elsewhere.").addOptions(
+                new OptionData(OptionType.STRING, "direction", "The Direction you want to go.")
+                .addChoice("North", "north")
+                .addChoice("Northeast", "northeast")
+                .addChoice("East", "east")
+                .addChoice("Southeast", "southeast")
+                .addChoice("South", "south")
+                .addChoice("Southwest", "southwest")
+                .addChoice("West", "west")
+                .addChoice("Northwest", "northwest")
+                .setRequired(true)
+            ).queue();
 
         } catch (InterruptedException e) {
             e.printStackTrace();

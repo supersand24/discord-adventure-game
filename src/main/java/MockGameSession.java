@@ -109,7 +109,7 @@ public class MockGameSession {
                             default -> System.out.println("Unknown Direction, try again.");
                         }
                         if (dir != null) {
-                            currentGameSession.moveCharacer(5, dir);
+                            currentGameSession.moveCharacter(5, dir);
                         }
                     } else {
                         System.out.println("Which way should I go?");

@@ -5,8 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import Game.GameSession;
+
 //An expandable 2D Array to keep track of different Locations within the Game Session.
 public class World {
+
+    private final Logger log = LoggerFactory.getLogger(GameSession.class);
 
     int rows;
     int columns;
@@ -22,7 +29,7 @@ public class World {
         createSettlements(2);
 
         for (Settlement settlement : settlements) {
-            System.out.println(settlement.name + " at X:" + settlement.worldSpace.xCoord + " Y:" + settlement.worldSpace.yCoord );
+            log.info(settlement.name + " at X:" + settlement.worldSpace.xCoord + " Y:" + settlement.worldSpace.yCoord);
         }
     }
 
@@ -65,11 +72,11 @@ public class World {
         for (Settlement settlement : settlements) {
             Settlement connectingTo = getRandomSettlement();
             while (settlement == connectingTo) {
-                System.out.println("Picking new settlement.");
+                log.info("Picking new settlement.");
                 connectingTo = getRandomSettlement();
             }
 
-            System.out.println("Connecting " + settlement.name + " to " + connectingTo.name);
+            log.info("Connecting " + settlement.name + " to " + connectingTo.name);
 
             int dirX = Integer.compare(connectingTo.worldSpace.xCoord, settlement.worldSpace.xCoord);
             int dirY = Integer.compare(connectingTo.worldSpace.yCoord, settlement.worldSpace.yCoord);
@@ -92,7 +99,7 @@ public class World {
         int currentY = y1;
 
         while (currentX != x2 || currentY != y2) {
-            System.out.println(currentX + " " + currentY + " " + x2 + " " + y2);
+            log.info(currentX + " " + currentY + " " + x2 + " " + y2);
 
             if (currentX < x2) currentX++;
             else if (currentX > x2) currentX--;
@@ -101,7 +108,7 @@ public class World {
             else if (currentY > y2) currentY--;
 
             getWorldSpace(currentX, currentY).feature = "Road";
-            System.out.println("Created Road at X:" + currentX + " Y:" + currentY);
+            log.info("Created Road at X:" + currentX + " Y:" + currentY);
         }
     }
 
