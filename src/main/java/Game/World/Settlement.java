@@ -7,7 +7,7 @@ public class Settlement extends Location {
     public String name;
     WorldSpace worldSpace;
 
-    public Map<World.Direction, Settlement> signposts = new HashMap<>();
+    public Map<Direction, Settlement> signposts = new HashMap<>();
     
     public Settlement(WorldSpace worldSpace) {
         this.worldSpace = worldSpace;
