@@ -7,6 +7,7 @@ import java.util.List;
 import Game.World.World;
 import Game.World.WorldSpace;
 import Game.World.Direction;
+import Game.World.Settlement;
 
 public class GameSession {
 
@@ -27,7 +28,9 @@ public class GameSession {
         linkedPlayers.put(discordId, newPlayer);
 
         //Place Character in a Settlement.
-        newPlayer.moveTo(world.getRandomSettlement());
+        Settlement settlement = world.getRandomSettlement();
+        settlement.addPlayer(newPlayer);
+        newPlayer.moveTo(settlement);
 
         return newPlayer;
     }
