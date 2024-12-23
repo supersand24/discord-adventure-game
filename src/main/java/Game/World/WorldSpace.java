@@ -9,6 +9,7 @@ public class WorldSpace extends Location{
 
     Terrain terrain;
     Settlement settlement;
+    String feature;
 
     public WorldSpace(Terrain terrain, int x, int y) {
         this.terrain = terrain;

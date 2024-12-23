@@ -27,6 +27,10 @@ public class Settlement extends Location {
         this.name = potentialNames[random.nextInt(potentialNames.length)];
     }
 
+    public WorldSpace getWorldSpace() {
+        return worldSpace;
+    }
+
     public enum Direction {
         North(0, -1),
         Northeast(1, -1),
@@ -43,6 +47,14 @@ public class Settlement extends Location {
         Direction(int x, int y) {
             this.x = x;
             this.y = y;
+        }
+
+        public int getX() {
+            return this.x;
+        }
+
+        public int getY() {
+            return this.y;
         }
 
         public static Direction fromValues(int x, int y) {

@@ -1,8 +1,11 @@
 package Game.World;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import Game.World.Settlement.Direction;
 
 //An expandable 2D Array to keep track of different Locations within the Game Session.
 public class World {
@@ -99,24 +102,49 @@ public class World {
             if (currentY < y2) currentY++;
             else if (currentY > y2) currentY--;
 
-            grid[currentY][currentX].feature = "Road";
+            getWorldSpace(currentX, currentY).feature = "Road";
             System.out.println("Created Road at X:" + currentX + " Y:" + currentY);
         }
     }
 
+    public HashMap<Direction, WorldSpace> getSurroundingSpaces(WorldSpace space) {
+        HashMap<Direction, WorldSpace> surroundingSpaces = new HashMap<>();
+
+        for (Direction dir : Direction.values()) {
+            getWorldSpaceOffset(space, dir);
+        }
+
+        return surroundingSpaces;
+    }
+
+    public WorldSpace getWorldSpace(int x, int y) {
+        if (x >= 0 && x < columns && y >= 0 && y < rows)
+            return grid[y][x];
+        else
+            return null;
+
+    }
+
+    public WorldSpace getWorldSpaceOffset(WorldSpace space, Direction direction) {
+        int x = space.xCoord + direction.getX();
+        int y = space.yCoord + direction.getY();
+
+        return getWorldSpace(x, y);
+    }
+
     public void printTerrainMap() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.print("[" + grid[i][j].getTerrainSymbol() + "] ");
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < columns; x++) {
+                System.out.print("[" + getWorldSpace(x, y).getTerrainSymbol() + "] ");
             }
             System.out.println();
         }
     }
 
     public void printSettlementMap() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (grid[i][j].settlement == null)
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < columns; x++) {
+                if (getWorldSpace(x, y).settlement == null)
                     System.out.print("[ ] ");
                 else
                     System.out.print("[X] ");
@@ -126,9 +154,9 @@ public class World {
     }
 
     public void printFeatureMap() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (grid[i][j].feature == null)
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < columns; x++) {
+                if (getWorldSpace(x, y).feature == null)
                     System.out.print("[ ] ");
                 else
                     System.out.print("[R] ");

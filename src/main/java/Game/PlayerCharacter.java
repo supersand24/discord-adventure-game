@@ -64,6 +64,10 @@ public class PlayerCharacter {
         }
     }
 
+    public Location getLocation() {
+        return currentLocation;
+    }
+
     public String checkLocation() {
         if (currentLocation == null) { return "I am currently lost in space and time!"; } else {
             if (currentLocation instanceof Settlement) {
