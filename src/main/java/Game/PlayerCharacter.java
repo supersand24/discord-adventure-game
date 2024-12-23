@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class PlayerCharacter {
 
-    String name;
+    public String name;
 
     int maxHitPoints;
     int hitPoints;
@@ -64,10 +64,6 @@ public class PlayerCharacter {
         }
     }
 
-    public Location getLocation() {
-        return currentLocation;
-    }
-
     public String checkLocation() {
         if (currentLocation == null) { return "I am currently lost in space and time!"; } else {
             if (currentLocation instanceof Settlement) {
@@ -78,6 +74,10 @@ public class PlayerCharacter {
                 return "I am standing " + currentWorldSpace.getTerrainDescription();
             } else { return "I am somewhere, but I can't tell where."; }
         }
+    }
+
+    public Location getLocation() {
+        return currentLocation;
     }
 
     public void moveTo(Location location) {

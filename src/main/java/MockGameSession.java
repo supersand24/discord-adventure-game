@@ -92,6 +92,31 @@ public class MockGameSession {
                     }
                 }
             }
+        } else {
+            switch (parts[0]) {
+                case "move" -> {
+                    if (parts.length > 1) {
+                        Direction dir = null;
+                        switch (parts[1]) {
+                            case "north" -> dir = Direction.North;
+                            case "northeast" -> dir = Direction.Northeast;
+                            case "east" -> dir = Direction.East;
+                            case "southeast" -> dir = Direction.Southeast;
+                            case "south" -> dir = Direction.South;
+                            case "southwest" -> dir = Direction.Southwest;
+                            case "west" -> dir = Direction.West;
+                            case "northwest" -> dir = Direction.Northwest;
+                            default -> System.out.println("Unknown Direction, try again.");
+                        }
+                        if (dir != null) {
+                            currentGameSession.moveCharacer(5, dir);
+                        }
+                    } else {
+                        System.out.println("Which way should I go?");
+                    }
+                }
+                default -> System.out.println("Unknown Command, try again...");
+            }
         }
 
         awaitInput();

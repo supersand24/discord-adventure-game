@@ -2,7 +2,7 @@ package Game.World;
 
 import java.util.*;
 
-public class Settlement extends Location {
+public class Settlement implements Location {
 
     public String name;
     WorldSpace worldSpace;

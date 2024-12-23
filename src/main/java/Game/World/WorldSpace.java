@@ -2,7 +2,7 @@ package Game.World;
 
 import Game.World.World.Terrain;
 
-public class WorldSpace extends Location{
+public class WorldSpace implements Location{
 
     public int xCoord;
     public int yCoord;
@@ -15,6 +15,10 @@ public class WorldSpace extends Location{
         this.terrain = terrain;
         this.xCoord = x;
         this.yCoord = y;
+    }
+
+    public WorldSpace getWorldSpace() {
+        return this;
     }
 
     public Settlement createSettlement() {
