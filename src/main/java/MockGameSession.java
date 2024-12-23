@@ -1,9 +1,9 @@
 import java.util.Scanner;
+import java.util.Set;
 
 import Game.GameSession;
 import Game.PlayerCharacter;
 import Game.World.Settlement;
-import Game.World.WorldSpace;
 
 @SuppressWarnings("unused")
 public class MockGameSession {
@@ -17,6 +17,19 @@ public class MockGameSession {
         currentGameSession = new GameSession();
 
         currentGameSession.createCharacter(5, "Steve");
+
+        currentGameSession.world.printTerrainMap();
+        currentGameSession.world.printSettlementMap();
+
+        currentGameSession.world.connectSettlements();
+
+        currentGameSession.world.printFeatureMap();
+
+        for (Settlement settlement : currentGameSession.world.settlements) {
+            for (Settlement.Direction key : settlement.signposts.keySet()) {
+                System.out.println("In " + settlement.name + " there is a signpost that says " + settlement.signposts.get(key).name + " is to the " + key);
+            }
+        }
 
         in = new Scanner(System.in);
 

@@ -18,7 +18,7 @@ public class World {
         this.grid = new WorldSpace[rows][columns];
         this.settlements = new ArrayList<>();
         generateTerrain();
-        createSettlements(3);
+        createSettlements(2);
 
         for (Settlement settlement : settlements) {
             System.out.println(settlement.name + " at X:" + settlement.worldSpace.xCoord + " Y:" + settlement.worldSpace.yCoord );
@@ -60,7 +60,51 @@ public class World {
         return settlements.get(random.nextInt(settlements.size()));
     }
 
-    public void systemPrintMap() {
+    public void connectSettlements() {
+        for (Settlement settlement : settlements) {
+            Settlement connectingTo = getRandomSettlement();
+            while (settlement == connectingTo) {
+                System.out.println("Picking new settlement.");
+                connectingTo = getRandomSettlement();
+            }
+
+            System.out.println("Connecting " + settlement.name + " to " + connectingTo.name);
+
+            int dirX = Integer.compare(connectingTo.worldSpace.xCoord, settlement.worldSpace.xCoord);
+            int dirY = Integer.compare(connectingTo.worldSpace.yCoord, settlement.worldSpace.yCoord);
+
+            Settlement.Direction direction = Settlement.Direction.fromValues(dirX, dirY);
+
+            createRoad(
+                    settlement.worldSpace.xCoord,
+                    settlement.worldSpace.yCoord,
+                    connectingTo.worldSpace.xCoord,
+                    connectingTo.worldSpace.yCoord
+            );
+
+            settlement.signposts.put(direction, connectingTo);
+        }
+    }
+
+    public void createRoad(int x1, int y1, int x2, int y2) {
+        int currentX = x1;
+        int currentY = y1;
+
+        while (currentX != x2 || currentY != y2) {
+            System.out.println(currentX + " " + currentY + " " + x2 + " " + y2);
+
+            if (currentX < x2) currentX++;
+            else if (currentX > x2) currentX--;
+
+            if (currentY < y2) currentY++;
+            else if (currentY > y2) currentY--;
+
+            grid[currentY][currentX].feature = "Road";
+            System.out.println("Created Road at X:" + currentX + " Y:" + currentY);
+        }
+    }
+
+    public void printTerrainMap() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 System.out.print("[" + grid[i][j].getTerrainSymbol() + "] ");
@@ -69,6 +113,30 @@ public class World {
         }
     }
 
-    enum Terrain { Plains, Forest, River, Mountain}
+    public void printSettlementMap() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (grid[i][j].settlement == null)
+                    System.out.print("[ ] ");
+                else
+                    System.out.print("[X] ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printFeatureMap() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (grid[i][j].feature == null)
+                    System.out.print("[ ] ");
+                else
+                    System.out.print("[R] ");
+            }
+            System.out.println();
+        }
+    }
+
+    enum Terrain { Plains, Forest, River, Mountain }
 
 }
