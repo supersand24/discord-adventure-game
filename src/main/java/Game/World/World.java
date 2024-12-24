@@ -83,32 +83,47 @@ public class World {
 
             Direction direction = Direction.fromValues(dirX, dirY);
 
-            createRoad(
-                    settlement.worldSpace.xCoord,
-                    settlement.worldSpace.yCoord,
-                    connectingTo.worldSpace.xCoord,
-                    connectingTo.worldSpace.yCoord
-            );
+            createRoad(settlement, connectingTo);
 
             settlement.signposts.put(direction, connectingTo);
         }
     }
 
-    public void createRoad(int x1, int y1, int x2, int y2) {
-        int currentX = x1;
-        int currentY = y1;
+    private void createRoad(Settlement from, Settlement to) {
+        int fromX = from.worldSpace.xCoord;
+        int fromY = from.worldSpace.yCoord;
+        int toX = to.worldSpace.xCoord;
+        int toY = to.worldSpace.yCoord;
 
-        while (currentX != x2 || currentY != y2) {
-            log.info(currentX + " " + currentY + " " + x2 + " " + y2);
+        while (fromX != toX || fromY != toY) {
+            log.info("Moving from X:" + fromX + " Y:" + fromY);
+            log.info("Moving to X:" + toX + " Y:" + toY);
 
-            if (currentX < x2) currentX++;
-            else if (currentX > x2) currentX--;
+            int diffX = (toX - fromX >= 1) ? 1 : (toX - fromX <= -1) ? -1 : 0;
+            int diffY = (toY - fromY >= 1) ? 1 : (toY - fromY <= -1) ? -1 : 0;
+            log.info("Direction X:" + diffX + " Y:" + diffY);
+            Direction direction = null;
+            try {
+                direction = Direction.fromValues(diffX, diffY);
+            } catch (IllegalArgumentException e) { log.error("Could not find a direction, while creating a road."); }
+            log.info("Direction:" + direction);
 
-            if (currentY < y2) currentY++;
-            else if (currentY > y2) currentY--;
+            log.info("Creating signpost on World Space X:" + fromX + " Y:" + fromY);
+            WorldSpace worldSpace = getWorldSpace(fromX, fromY);
+            worldSpace.signposts.put(direction, to);
+            log.info("Signpost:" + worldSpace.signposts.get(direction).name + " dir:" + direction);
 
-            getWorldSpace(currentX, currentY).feature = "Road";
-            log.info("Created Road at X:" + currentX + " Y:" + currentY);
+            fromX += diffX;
+            fromY += diffY;
+
+            WorldSpace roadWorldSpace = getWorldSpace(fromX, fromY);
+            roadWorldSpace.feature = "Road";
+            log.info("Created Road at X:" + fromX + " Y:" + fromY);
+
+            Direction opDirection = Direction.getOppositeDirection(direction);
+            log.info("Creating " + opDirection + " signpost on World Space X:" + fromX + " Y:" + fromY);
+            roadWorldSpace.signposts.put(opDirection, from);
+            log.info(roadWorldSpace + " Signpost:" + roadWorldSpace.signposts.get(opDirection).name + " dir:" + opDirection);
         }
     }
 

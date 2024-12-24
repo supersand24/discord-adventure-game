@@ -93,16 +93,14 @@ public class MockGameSession {
                 }
                 case "check-signposts" -> {
                     Location location = player.getLocation();
-                    if (location instanceof Settlement settlement) {
-                        if (settlement.signposts == null) System.out.println("There are no signposts in sight."); else {
-                            if (settlement.signposts.size() == 1) {
-                                Direction dir = settlement.signposts.keySet().iterator().next();
-                                System.out.println("There is a single signpost, it says " + settlement.signposts.get(dir).name + " is to the " + dir + ".");
-                            } else {
-                                System.out.println("There are multiple signposts, they say");
-                                for (Direction dir : settlement.signposts.keySet()) {
-                                    System.out.println(settlement.signposts.get(dir).name + " is to the " + dir + ".");
-                                }
+                    if (location.signposts.size() > 0) {
+                        if (location.signposts.size() == 1) {
+                            Direction dir = location.signposts.keySet().iterator().next();
+                            System.out.println("There is a single signpost, it says " + location.signposts.get(dir).name + " is to the " + dir + ".");
+                        } else {
+                            System.out.println("There are multiple signposts, they say");
+                            for (Direction dir : location.signposts.keySet()) {
+                                System.out.println(location.signposts.get(dir).name + " is to the " + dir + ".");
                             }
                         }
                     } else System.out.println("There are no signposts in sight.");

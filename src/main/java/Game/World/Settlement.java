@@ -5,8 +5,6 @@ import java.util.*;
 public class Settlement extends Location {
 
     WorldSpace worldSpace;
-
-    public Map<Direction, Settlement> signposts = new HashMap<>();
     
     public Settlement(WorldSpace worldSpace) {
         this.worldSpace = worldSpace;

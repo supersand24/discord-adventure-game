@@ -35,4 +35,18 @@ public enum Direction {
         throw new IllegalArgumentException("No direction for X:" + x + " Y:" + y);
     }
 
+    public static Direction getOppositeDirection(Direction direction) {
+        switch (direction) {
+            case North : return South;
+            case Northeast : return Southwest;
+            case East : return West;
+            case Southeast : return Northwest;
+            case South : return North;
+            case Southwest : return Northeast;
+            case West : return East;
+            case Northwest : return Southeast;
+            default : return null;
+        }
+    }
+
 }

@@ -48,5 +48,9 @@ public class WorldSpace extends Location{
             default -> { return "in an unknown terrain."; }
         }
     }
+
+    public String toString() {
+        return "WorldSpace X:" + xCoord + " Y:" + yCoord;
+    }
     
 }
