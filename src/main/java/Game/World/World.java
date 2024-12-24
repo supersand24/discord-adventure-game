@@ -70,22 +70,20 @@ public class World {
 
     public void connectSettlements() {
         for (Settlement settlement : settlements) {
-            Settlement connectingTo = getRandomSettlement();
-            while (settlement == connectingTo) {
-                log.info("Picking new settlement.");
-                connectingTo = getRandomSettlement();
+            List<Settlement> connectables = new ArrayList<>(settlements);
+            connectables.remove(settlement);
+            for (Settlement signpostSettlement : settlement.signposts.values()) {
+                connectables.remove(signpostSettlement);
             }
-
-            log.info("Connecting " + settlement.name + " to " + connectingTo.name);
-
-            int dirX = Integer.compare(connectingTo.worldSpace.xCoord, settlement.worldSpace.xCoord);
-            int dirY = Integer.compare(connectingTo.worldSpace.yCoord, settlement.worldSpace.yCoord);
-
-            Direction direction = Direction.fromValues(dirX, dirY);
-
-            createRoad(settlement, connectingTo);
-
-            settlement.signposts.put(direction, connectingTo);
+            if (connectables.size() > 0) {
+                System.out.println("More than 0 settlements.");
+                Random random = new Random();
+                Settlement connectingTo = connectables.get(random.nextInt(connectables.size()));
+                log.info("Connecting " + settlement.name + " to " + connectingTo.name);
+                createRoad(settlement, connectingTo);
+            } else {
+                System.out.println("No possible settlements to connect to.");
+            }
         }
     }
 
@@ -95,6 +93,13 @@ public class World {
         int toX = to.worldSpace.xCoord;
         int toY = to.worldSpace.yCoord;
 
+        int dirX = Integer.compare(to.worldSpace.xCoord, from.worldSpace.xCoord);
+        int dirY = Integer.compare(to.worldSpace.yCoord, from.worldSpace.yCoord);
+
+        Direction direction = Direction.fromValues(dirX, dirY);
+
+        from.signposts.put(direction, to);
+
         while (fromX != toX || fromY != toY) {
             log.info("Moving from X:" + fromX + " Y:" + fromY);
             log.info("Moving to X:" + toX + " Y:" + toY);
@@ -102,7 +107,6 @@ public class World {
             int diffX = (toX - fromX >= 1) ? 1 : (toX - fromX <= -1) ? -1 : 0;
             int diffY = (toY - fromY >= 1) ? 1 : (toY - fromY <= -1) ? -1 : 0;
             log.info("Direction X:" + diffX + " Y:" + diffY);
-            Direction direction = null;
             try {
                 direction = Direction.fromValues(diffX, diffY);
             } catch (IllegalArgumentException e) { log.error("Could not find a direction, while creating a road."); }
@@ -111,20 +115,22 @@ public class World {
             log.info("Creating signpost on World Space X:" + fromX + " Y:" + fromY);
             WorldSpace worldSpace = getWorldSpace(fromX, fromY);
             worldSpace.signposts.put(direction, to);
-            log.info("Signpost:" + worldSpace.signposts.get(direction).name + " dir:" + direction);
+            log.info(worldSpace + " Signpost:" + worldSpace.signposts.get(direction).name + " dir:" + direction);
 
             fromX += diffX;
             fromY += diffY;
 
             WorldSpace roadWorldSpace = getWorldSpace(fromX, fromY);
             roadWorldSpace.feature = "Road";
-            log.info("Created Road at X:" + fromX + " Y:" + fromY);
+            log.info("Created Road at " + roadWorldSpace);
 
-            Direction opDirection = Direction.getOppositeDirection(direction);
-            log.info("Creating " + opDirection + " signpost on World Space X:" + fromX + " Y:" + fromY);
-            roadWorldSpace.signposts.put(opDirection, from);
-            log.info(roadWorldSpace + " Signpost:" + roadWorldSpace.signposts.get(opDirection).name + " dir:" + opDirection);
+            direction = Direction.getOppositeDirection(direction);
+            log.info("Creating " + direction + " signpost on " + roadWorldSpace);
+            roadWorldSpace.signposts.put(direction, from);
+            log.info(roadWorldSpace + " Signpost:" + roadWorldSpace.signposts.get(direction).name + " dir:" + direction);
         }
+
+        to.signposts.put(direction, from);
     }
 
     public HashMap<Direction, WorldSpace> getSurroundingSpaces(WorldSpace space) {
