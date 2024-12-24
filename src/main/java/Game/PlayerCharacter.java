@@ -65,15 +65,19 @@ public class PlayerCharacter {
     }
 
     public String checkLocation() {
+        StringBuilder str = new StringBuilder();
         if (currentLocation == null) { return "I am currently lost in space and time!"; } else {
-            if (currentLocation instanceof Settlement) {
-                Settlement currentSettlement = (Settlement) currentLocation;
+            if (currentLocation instanceof Settlement currentSettlement) {
                 return "I am in " + currentSettlement.name + ".";
-            } else if (currentLocation instanceof WorldSpace) {
-                WorldSpace currentWorldSpace = (WorldSpace) currentLocation;
-                return "I am standing " + currentWorldSpace.getTerrainDescription();
+            } else if (currentLocation instanceof WorldSpace currentWorldSpace) {
+                str.append("I am standing ").append(currentWorldSpace.getTerrainDescription());
+                if (currentWorldSpace.hasSettlement()) {
+                    Settlement settlement = currentWorldSpace.getSettlement();
+                    str.append("  I am also currently outside of " + settlement.name + ".");
+                }
             } else { return "I am somewhere, but I can't tell where."; }
         }
+        return str.toString();
     }
 
     public Location getLocation() {

@@ -129,6 +129,16 @@ public class MockGameSession {
                         System.out.println("Which way should I go?");
                     }
                 }
+                case "enter" -> {
+                    PlayerCharacter player = currentGameSession.getCharacter(5);
+                    Location playerLocation = player.getLocation().getWorldSpace();
+                    if (playerLocation instanceof WorldSpace worldSpace) {
+                        if (worldSpace.hasSettlement()) {
+                            player.moveTo(worldSpace.getSettlement());
+                            System.out.println(player.name + " entered " + worldSpace.getSettlement().name + ".");
+                        }
+                    }
+                }
                 default -> System.out.println("Unknown Command, try again...");
             }
         }

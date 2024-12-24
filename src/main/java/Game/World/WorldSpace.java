@@ -29,6 +29,14 @@ public class WorldSpace extends Location{
         return settlement;
     }
 
+    public boolean hasSettlement() {
+        return settlement != null;
+    }
+
+    public Settlement getSettlement() {
+        return settlement;
+    }
+
     public String getTerrainSymbol() {
         switch (terrain) {
             case Plains -> { return "P"; }
