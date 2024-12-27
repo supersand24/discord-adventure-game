@@ -26,7 +26,7 @@ public class World {
         this.grid = new WorldSpace[rows][columns];
         this.settlements = new ArrayList<>();
         generateTerrain();
-        createSettlements(2);
+        createSettlements(5);
 
         for (Settlement settlement : settlements) {
             log.info(settlement.name + " at X:" + settlement.worldSpace.xCoord + " Y:" + settlement.worldSpace.yCoord);
@@ -99,6 +99,7 @@ public class World {
         Direction direction = Direction.fromValues(dirX, dirY);
 
         from.signposts.put(direction, to);
+        from.worldSpace.feature = "Road";
 
         while (fromX != toX || fromY != toY) {
             log.info("Moving from X:" + fromX + " Y:" + fromY);
