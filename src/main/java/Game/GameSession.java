@@ -23,7 +23,7 @@ public class GameSession {
     public HashMap<Long, PlayerCharacter> linkedPlayers;
 
     public GameSession() {
-        world = new World(10, 10);
+        world = new World(10, 10, 7);
         players = new ArrayList<>();
         linkedPlayers = new HashMap<>();
     }

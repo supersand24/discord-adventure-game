@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.List;
 import java.util.Set;
 
 import Game.GameSession;
@@ -8,6 +9,7 @@ import Game.World.World;
 import Game.World.Location;
 import Game.World.WorldSpace;
 import Game.World.Direction;
+import Game.World.Signpost;
 
 @SuppressWarnings("unused")
 public class MockGameSession {
@@ -92,15 +94,21 @@ public class MockGameSession {
                     }
                 }
                 case "check-signposts" -> {
-                    Location location = player.getLocation();
-                    if (location.signposts.size() > 0) {
-                        if (location.signposts.size() == 1) {
-                            Direction dir = location.signposts.keySet().iterator().next();
-                            System.out.println("There is a single signpost, it says " + location.signposts.get(dir).name + " is to the " + dir + ".");
+                    WorldSpace location = player.getLocation().getWorldSpace();
+                    List<Signpost> signposts = location.getSignposts();
+                    if (signposts.size() > 0) {
+                        if (signposts.size() == 1) {
+                            Direction dir = signposts.get(0).getDirection();
+                            System.out.println("There is a single signpost and it says");
+                            for (Settlement settlement : signposts.get(0).getSettlements()) {
+                                System.out.println(settlement.name + " is to the " + dir);
+                            }
                         } else {
                             System.out.println("There are multiple signposts, they say");
-                            for (Direction dir : location.signposts.keySet()) {
-                                System.out.println(location.signposts.get(dir).name + " is to the " + dir + ".");
+                            for (Signpost signpost : signposts) {
+                                for (Settlement settlement : signpost.getSettlements()) {
+                                    System.out.println(settlement.name + " is to the " + signpost.getDirection());
+                                }
                             }
                         }
                     } else System.out.println("There are no signposts in sight.");

@@ -1,8 +1,18 @@
 package Game.World;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import Game.World.World.Terrain;
 
-public class WorldSpace extends Location{
+public class WorldSpace extends Location {
+
+    private final Logger log = LoggerFactory.getLogger(WorldSpace.class);
 
     public String name;
 
@@ -12,6 +22,8 @@ public class WorldSpace extends Location{
     Terrain terrain;
     Settlement settlement;
     String feature;
+
+    Map<Direction, Signpost> signposts = new HashMap<>();
 
     public WorldSpace(Terrain terrain, int x, int y) {
         this.terrain = terrain;
@@ -35,6 +47,20 @@ public class WorldSpace extends Location{
 
     public Settlement getSettlement() {
         return settlement;
+    }
+
+    public void addSettlementSignpost(Direction direction, Settlement settlement) {
+        if (signposts.get(direction) == null) {
+            log.info("No Signpost for " + toString() + " " + direction + " creating one now!");
+            signposts.put(direction,new Signpost(direction, settlement));
+        } else {
+            log.info("Existing Signpost found for " + toString() + " adding " + settlement.name + " to " + direction);
+            signposts.get(direction).addSettlement(settlement);
+        }
+    }
+
+    public List<Signpost> getSignposts() {
+        return new ArrayList<>(signposts.values());
     }
 
     public String getTerrainSymbol() {

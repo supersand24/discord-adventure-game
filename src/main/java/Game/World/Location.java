@@ -1,9 +1,7 @@
 package Game.World;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,6 @@ public abstract class Location {
     public String name = "Nameless Location";
 
     protected List<PlayerCharacter> playersHere = new ArrayList<>();
-    public Map<Direction, Settlement> signposts = new HashMap<>();
 
     // Add a player to the location
     public void addPlayer(PlayerCharacter player) {
