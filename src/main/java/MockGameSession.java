@@ -15,6 +15,7 @@ import Game.World.Signpost;
 public class MockGameSession {
 
     static GameSession currentGameSession;
+    static int controlledPlayer = 0;
 
     static Scanner in;
 
@@ -22,7 +23,10 @@ public class MockGameSession {
 
         currentGameSession = new GameSession();
 
-        currentGameSession.createCharacter(5, "Steve");
+        currentGameSession.createCharacter(0, "Steve");
+        currentGameSession.createCharacter(1, "David");
+        currentGameSession.createCharacter(2, "Brian");
+        currentGameSession.createCharacter(3, "Gerald");
 
         World world = currentGameSession.world;
 
@@ -41,6 +45,10 @@ public class MockGameSession {
         }
         */
 
+        for(PlayerCharacter player : currentGameSession.linkedPlayers.values()) {
+            System.out.println(player.name + " was spawned at " + player.getLocation().name + ".");
+        }
+
         in = new Scanner(System.in);
 
         awaitInput();
@@ -55,7 +63,7 @@ public class MockGameSession {
         String[] parts = next.split(" "); // Split the string by spaces
 
         if (parts[0].startsWith("check")) {
-            PlayerCharacter player = currentGameSession.getCharacter(5);
+            PlayerCharacter player = currentGameSession.getCharacter(controlledPlayer);
             switch (parts[0]) {
                 case "check-stats" -> System.out.println(player.checkStats());
                 case "check-hands" -> System.out.println(player.checkHands());
@@ -131,14 +139,14 @@ public class MockGameSession {
                             default -> System.out.println("Unknown Direction, try again.");
                         }
                         if (dir != null) {
-                            currentGameSession.moveCharacter(5, dir);
+                            currentGameSession.moveCharacter(controlledPlayer, dir);
                         }
                     } else {
                         System.out.println("Which way should I go?");
                     }
                 }
                 case "enter" -> {
-                    PlayerCharacter player = currentGameSession.getCharacter(5);
+                    PlayerCharacter player = currentGameSession.getCharacter(controlledPlayer);
                     Location playerLocation = player.getLocation().getWorldSpace();
                     if (playerLocation instanceof WorldSpace worldSpace) {
                         if (worldSpace.hasSettlement()) {
@@ -146,6 +154,14 @@ public class MockGameSession {
                             System.out.println(player.name + " entered " + worldSpace.getSettlement().name + ".");
                         }
                     }
+                }
+                case "swap" -> {
+                    if (parts.length > 1) {
+                        if (currentGameSession.getCharacter(Integer.parseInt(parts[1])) != null) {
+                            controlledPlayer = Integer.parseInt(parts[1]);
+                            System.out.println("Swapped to " + currentGameSession.getCharacter(controlledPlayer).name);
+                        }
+                    } else System.out.println("Not enough arguments, need a number to swap to!");
                 }
                 default -> System.out.println("Unknown Command, try again...");
             }
