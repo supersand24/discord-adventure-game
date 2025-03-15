@@ -31,7 +31,7 @@ public class World {
         }
     }
 
-    private void generateTerrain() {
+    public void generateTerrain() {
         Random random = new Random();
         Terrain[] terrains = Terrain.values();
 
@@ -43,7 +43,7 @@ public class World {
         }
     }
 
-    private void createSettlements(int number) {
+    public void createSettlements(int number) {
         Random random = new Random();
         List<WorldSpace> selectedWorldSpaces = new ArrayList<>();
 
