@@ -13,4 +13,8 @@ public class Settlement extends Location {
         return worldSpace;
     }
 
+    public String toString() {
+        return name + " [ " + worldSpace.xCoord + " , " + worldSpace.yCoord + " ]";
+    }
+
 }

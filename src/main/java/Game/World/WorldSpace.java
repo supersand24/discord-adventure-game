@@ -84,7 +84,7 @@ public class WorldSpace extends Location {
     }
 
     public String toString() {
-        return "WorldSpace X:" + xCoord + " Y:" + yCoord;
+        return "WorldSpace [ " + xCoord + " , " + yCoord + " ]";
     }
     
 }

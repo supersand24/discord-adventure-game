@@ -26,6 +26,22 @@ public class PlayerCharacter {
 
     Location currentLocation;
 
+    public PlayerCharacter() {
+        name = "Unknown Name";
+
+        strength = 10;
+        dexterity = 10;
+        charsima = 10;
+
+        maxHitPoints = 25;
+        hitPoints = maxHitPoints;
+
+        //Inventory
+        rightHand = new Item("Iron Sword", true, 2, 0);
+        leftHand = new Item("Wooden Shield", true, 5, 0);
+        backpack.add(new Item("Minor Potion of Healing", true, 0, 10));
+    }
+
     public PlayerCharacter(String name) {
         this.name = name;
 
